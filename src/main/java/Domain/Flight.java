@@ -1,16 +1,17 @@
 package Domain;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class Flight extends Entity<Integer>{
     private String destination;
-    private LocalDateTime departure_time;
+    private LocalDate departure_date;
     private String airport;
     private int available_seats;
 
-    public Flight(String destination, LocalDateTime departure_time, String airport, int available_seats) {
+    public Flight(String destination, LocalDate departure_date, String airport, int available_seats) {
         this.destination = destination;
-        this.departure_time = departure_time;
+        this.departure_date = departure_date;
         this.airport = airport;
         this.available_seats = available_seats;
     }
@@ -19,8 +20,8 @@ public class Flight extends Entity<Integer>{
         return destination;
     }
 
-    public LocalDateTime getDeparture_time() {
-        return departure_time;
+    public LocalDate getDeparture_date() {
+        return departure_date;
     }
 
     public String getAirport() {
@@ -29,6 +30,17 @@ public class Flight extends Entity<Integer>{
 
     public int getAvailable_seats() {
         return available_seats;
+    }
+
+    @Override
+    public String toString() {
+        return "Flight{" +
+                "id='" + getId() + '\'' +
+                "destination='" + destination + '\'' +
+                ", departure_date=" + departure_date +
+                ", airport='" + airport + '\'' +
+                ", available_seats=" + available_seats +
+                '}';
     }
 }
 

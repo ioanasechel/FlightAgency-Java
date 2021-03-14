@@ -20,4 +20,13 @@ public class Employee extends Entity<String>{
     public void setPassword(String password) {
         this.password = password;
     }
+
+    @Override
+    public String toString() {
+        return "Employee{" +
+                "username='" + getId() + '\'' +
+                "password='" + password + '\'' +
+                ", name='" + name + '\'' +
+                '}';
+    }
 }

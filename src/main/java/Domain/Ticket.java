@@ -6,9 +6,17 @@ public class Ticket extends Entity<Integer>{
 
     private Integer flightID;
     private String clientName;
-    private List<String> tourists;
+    private String tourists;
     private String clientAddress;
     private int seats;
+
+    public Ticket(Integer flightID, String clientName, String tourists, String clientAddress, int seats) {
+        this.flightID = flightID;
+        this.clientName = clientName;
+        this.tourists = tourists;
+        this.clientAddress = clientAddress;
+        this.seats = seats;
+    }
 
     public Integer getFlightID() {
         return flightID;
@@ -18,7 +26,7 @@ public class Ticket extends Entity<Integer>{
         return clientName;
     }
 
-    public List<String> getTourists() {
+    public String getTourists() {
         return tourists;
     }
 
@@ -28,5 +36,17 @@ public class Ticket extends Entity<Integer>{
 
     public int getSeats() {
         return seats;
+    }
+
+    @Override
+    public String toString() {
+        return "Ticket{" +
+                "ID=" + getId() + '\'' +
+                "flightID=" + flightID +
+                ", clientName='" + clientName + '\'' +
+                ", tourists='" + tourists + '\'' +
+                ", clientAddress='" + clientAddress + '\'' +
+                ", seats=" + seats +
+                '}';
     }
 }
