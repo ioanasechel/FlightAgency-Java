@@ -42,5 +42,9 @@ public class Flight extends Entity<Integer>{
                 ", available_seats=" + available_seats +
                 '}';
     }
+
+    public void setAvailable_seats(int available_seats) {
+        this.available_seats = available_seats;
+    }
 }
 

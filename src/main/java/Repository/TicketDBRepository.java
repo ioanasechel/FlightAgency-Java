@@ -122,4 +122,31 @@ public class TicketDBRepository implements TicketRepositoryInterface {
         return null;
     }
 
+    @Override
+    public Ticket findOne(Integer integer) {
+        logger.traceEntry();
+        Connection con = dbUtils.getConnection();
+        try(PreparedStatement preStmt = con.prepareStatement("select * from Tickets where ticketID=?")) {
+            preStmt.setInt(1, integer);
+            try(ResultSet result = preStmt.executeQuery()) {
+                if (result.next()) {
+                    int ticketID = result.getInt("ticketID");
+                    int flightID = result.getInt("flightID");
+                    String client_name = result.getString("clientName");
+                    String tourists =  result.getString("tourists");
+                    String client_address = result.getString("clientAddress");
+                    int seats = result.getInt("seats");
+                    Ticket ticket = new Ticket(flightID, client_name, tourists, client_address, seats);
+                    ticket.setId(ticketID);
+                    return ticket;
+                }
+            }
+        } catch (SQLException e) {
+            logger.error(e);
+            System.err.println("Error DB " + e);
+        }
+        logger.traceExit();
+        return null;
+    }
+
 }

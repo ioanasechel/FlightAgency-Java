@@ -64,6 +64,28 @@ public class EmployeeDBRepository implements EmployeeRepositoryInterface {
     }
 
     @Override
+    public Employee findOne(String u) {
+        Connection con = dbUtils.getConnection();
+        try(PreparedStatement preStmt = con.prepareStatement("select * from Employees where username=?")) {
+            preStmt.setString(1, u);
+            try(ResultSet result = preStmt.executeQuery()) {
+                if (result.next()) {
+                    String username = result.getString("username");
+                    String password =  result.getString("password");
+                    String name = result.getString("name");
+                    Employee employee = new Employee(password, name);
+                    employee.setId(username);
+                    return employee;
+                }
+            }
+        } catch (SQLException e) {
+            logger.error(e);
+            System.err.println("Error DB " + e);
+        }
+        return null;
+    }
+
+    @Override
     public Iterable<Employee> findAll() {
         logger.traceEntry();
         Connection con = dbUtils.getConnection();

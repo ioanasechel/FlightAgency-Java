@@ -48,5 +48,7 @@ public interface Repository<ID, E extends Entity<ID>> {
      * @throws ValidationException      if the entity is not valid.
      */
     E update(E entity);
+
+    E findOne(ID id);
 }
 

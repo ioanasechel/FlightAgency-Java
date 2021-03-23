@@ -115,6 +115,46 @@ public class FlightDBRepository implements FlightRepositoryInterface{
 
     @Override
     public Flight update(Flight entity) {
+        logger.traceEntry("Update Flight {} ",entity);
+        Connection connection = dbUtils.getConnection();
+        try(PreparedStatement preparedStatement = connection.prepareStatement("update Flights set available_seats=? where flightID=?")){
+            preparedStatement.setInt(1,entity.getAvailable_seats());
+            preparedStatement.setInt(2,entity.getId());
+            int result = preparedStatement.executeUpdate();
+            if(result != 1)
+                return entity;
+            logger.trace("Updates {} instances",result);
+        }catch (SQLException e){
+            logger.error(e);
+            System.err.println("Error DB " + e);
+        }
+        logger.traceExit();
+        return null;
+    }
+
+    @Override
+    public Flight findOne(Integer integer) {
+        logger.traceEntry();
+        Connection con = dbUtils.getConnection();
+        try(PreparedStatement preStmt = con.prepareStatement("select * from Flights where flightID=?")) {
+            preStmt.setInt(1, integer);
+            try (ResultSet result = preStmt.executeQuery()) {
+                if (result.next()) {
+                    int flightID = result.getInt("flightID");
+                    String destination = result.getString("destination");
+                    String airport = result.getString("airport");
+                    int available_seats = result.getInt("available_seats");
+                    LocalDate departure_date = result.getDate("departure_date").toLocalDate();
+                    Flight flight = new Flight(destination, departure_date, airport, available_seats);
+                    flight.setId(flightID);
+                    return flight;
+                }
+            }
+        }catch (SQLException e){
+            logger.error(e);
+            System.err.println("Error DB " + e);
+        }
+        logger.traceExit();
         return null;
     }
 
